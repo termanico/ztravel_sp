@@ -1,0 +1,42 @@
+specVersion: "2.4"
+metadata:
+  name: "ztravel_sp"
+type: application
+framework:
+  name: SAPUI5
+  version: "1.97.2"
+  libraries:
+    - name: sap.m
+    - name: sap.ushell
+    - name: sap.fe.templates
+    - name: themelib_sap_horizon
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertError: true # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        backend:
+          - path: /sap
+            url: https://b6de0c6d-ae5b-496b-8c7a-e65151bfa6d7.abap.eu10.hana.ondemand.com
+            scp: true
+    - name: sap-fe-mockserver
+      beforeMiddleware: fiori-tools-proxy
+      configuration:
+        service:
+          urlBasePath: /sap/opu/odata4/dmo/ui_travel_d_d_o4/srvd/dmo/ui_travel_d_d/0001
+          name: ""
+          metadataXmlPath: ./webapp/localService/metadata.xml
+          mockdataRootPath: ./webapp/localService/mockdata
+          generateMockData: true
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: fiori-tools-preview
+      afterMiddleware: fiori-tools-appreload
+      configuration:
+        component: ztravelsp
+        ui5Theme: sap_horizon

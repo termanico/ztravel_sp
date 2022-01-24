@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "2.4"
+metadata:
+  name: "ztravel_sp"
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        ignoreCertError: true # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        target:
+          url: https://b6de0c6d-ae5b-496b-8c7a-e65151bfa6d7.abap.eu10.hana.ondemand.com
+          scp: true
+        app:
+          name: ZTRAVEL_SP
+          description: null
+          package: Z_TERMANICO
+          transport: H01K900006
