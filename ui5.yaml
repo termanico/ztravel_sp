@@ -12,21 +12,21 @@ server:
           - path: /sap
             # url: https://b6de0c6d-ae5b-496b-8c7a-e65151bfa6d7.abap-web.eu10.hana.ondemand.com/
             url: https://b6de0c6d-ae5b-496b-8c7a-e65151bfa6d7.abap.eu10.hana.ondemand.com
-            # scp: true
+            scp: true
         ui5:
           path:
             - /resources
             - /test-resources
           url: https://ui5.sap.com
           version: # The UI5 version, for instance, 1.78.1. Empty means latest version
-    # - name: fiori-tools-appreload
-    #   afterMiddleware: compression
-    #   configuration:
-    #     port: 35729
-    #     path: webapp
-    #     delay: 300
-    # - name: fiori-tools-preview
-    #   afterMiddleware: fiori-tools-appreload
-    #   configuration:
-    #     component: ztravelsp
-    #     ui5Theme: sap_horizon
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: fiori-tools-preview
+      afterMiddleware: fiori-tools-appreload
+      configuration:
+        component: ztravelsp
+        ui5Theme: sap_horizon
